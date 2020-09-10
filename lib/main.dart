@@ -1,14 +1,21 @@
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:islamdag/pages/categories_page.dart';
-import 'package:islamdag/pages/fatawa_list_page.dart';
-import 'package:islamdag/pages/library_page.dart';
-import 'package:islamdag/pages/news_page.dart';
-import 'package:islamdag/pages/pray_time_page.dart';
-import 'package:islamdag/pages/videos_page.dart';
+import 'package:islamdag/screens/categories_screen.dart';
+import 'package:islamdag/screens/fatawas_screen.dart';
+import 'package:islamdag/screens/library_screen.dart';
+import 'package:islamdag/screens/news_screen.dart';
+import 'package:islamdag/screens/pray_time_screen.dart';
+import 'package:islamdag/screens/videos_screen.dart';
 import 'package:islamdag/utils.dart';
 
+import 'bloc/article_bloc/simple_bloc_observer.dart';
+
 void main() {
+  EquatableConfig.stringify = kDebugMode;
+  Bloc.observer = SimpleBlocObserver();
   runApp(MyApp());
 }
 
@@ -43,12 +50,12 @@ class HomePage extends StatefulWidget {
 var _selectedIndex = 1;
 var _listDrawer = [
   {"text": "Новости", "icon": Icons.new_releases, "body": Container()},
-  {"text": "Новости", "icon": Icons.new_releases, "body": NewsPage()},
-  {"text": "Статьи", "icon": Icons.menu, "body": CategoriesPage()},
-  {"text": "Время молитвы", "icon": Icons.timer, "body": PrayTimePage()},
-  {"text": "Видеотека", "icon": Icons.tv, "body": VideosPage()},
-  {"text": "Библиотека", "icon": Icons.library_books, "body": LibraryPage()},
-  {"text": "Фетвы", "icon": Icons.question_answer, "body": FatawaListPage()}
+  {"text": "Новости", "icon": Icons.new_releases, "body": NewsListScreen()},
+  {"text": "Статьи", "icon": Icons.menu, "body": CategoriesScreen()},
+  {"text": "Время молитвы", "icon": Icons.timer, "body": PrayTimeScreen()},
+  {"text": "Видеотека", "icon": Icons.tv, "body": VideosScreen()},
+  {"text": "Библиотека", "icon": Icons.library_books, "body": LibraryScreen()},
+  {"text": "Фетвы", "icon": Icons.question_answer, "body": FatawasScreen()}
 ];
 
 class _HomePageState extends State<HomePage> {

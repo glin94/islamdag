@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 @HiveType(typeId: 0)
-class Article extends HiveObject {
+class Article extends Equatable with HiveObject {
   @HiveField(0)
   String id;
 
@@ -33,12 +34,6 @@ class Article extends HiveObject {
   List<dynamic> images;
 
   @HiveField(10)
-  String bookUrl;
-
-  @HiveField(11)
-  String videoUrl;
-
-  @HiveField(12)
   String voprosi;
 
   Article(
@@ -52,8 +47,6 @@ class Article extends HiveObject {
       this.content,
       this.date,
       this.images,
-      this.bookUrl,
-      this.videoUrl,
       this.totalCount});
 
   factory Article.fromJson(Map<dynamic, dynamic> jsonArticle) {
@@ -67,12 +60,15 @@ class Article extends HiveObject {
         date: jsonArticle["created"],
         content: jsonArticle['body'],
         author: jsonArticle["field_avtor"],
-        bookUrl: jsonArticle["field_book"],
-        url: jsonArticle["path"],
-        videoUrl: jsonArticle["field_videoteka_new"],
+        url: jsonArticle["path"] ??
+            jsonArticle["field_book"] ??
+            jsonArticle["field_videoteka_new"],
         totalCount: jsonArticle["totalcount"]);
   }
 
   @override
   String toString() => 'Article { id: $id }';
+
+  @override
+  List<Object> get props => [id, title, author];
 }

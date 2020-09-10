@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:islamdag/models/article.dart';
-import 'package:islamdag/pages/article_details_page.dart';
+import 'package:islamdag/screens/article_details_screen.dart';
 
 class ArticleCardItem extends StatelessWidget {
   final Article article;
@@ -24,7 +24,7 @@ class ArticleCardItem extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     CupertinoPageRoute(
-                        builder: (c) => ArticleDetailPage(
+                        builder: (c) => ArticleDetailScreen(
                               article: article,
                             ))),
                 child: Hero(

@@ -2,11 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:islamdag/models/article.dart';
+import 'package:islamdag/widgets/share_button.dart';
 
-class BookDetailPage extends StatelessWidget {
+class BookDetailScreen extends StatelessWidget {
   final Article book;
 
-  BookDetailPage(this.book);
+  BookDetailScreen(this.book);
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +15,7 @@ class BookDetailPage extends StatelessWidget {
     final appBar = AppBar(
       elevation: .5,
       title: Text('Библиотека'),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.share),
-          onPressed: () {},
-        )
-      ],
+      actions: <Widget>[ShareButton(item: book)],
     );
 
     ///detail of book image and it's pages
@@ -28,15 +24,17 @@ class BookDetailPage extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(16.0),
           child: Hero(
-            tag: book.title,
+            tag: book.id,
             child: Material(
-              elevation: 15.0,
-              shadowColor: Colors.blue.shade900,
-              child: CachedNetworkImage(
-                imageUrl: book.images[0]['src'],
-                fit: BoxFit.cover,
-              ),
-            ),
+                elevation: 15.0,
+                color: Colors.white,
+                shadowColor: Colors.blue.shade900,
+                child: book.images != null
+                    ? CachedNetworkImage(
+                        imageUrl: book.images[0]['src'],
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset("assets/logo.png")),
           ),
         ),
       ],
@@ -63,12 +61,15 @@ class BookDetailPage extends StatelessWidget {
           ],
         ),
         SizedBox(height: MediaQuery.of(context).size.height / 50),
-        MaterialButton(
-          onPressed: () {},
-          minWidth: 160.0,
-          color: Colors.blue,
-          child: text('Скачать', color: Colors.white, size: 14, isBold: true),
-        ),
+        book.url != null
+            ? MaterialButton(
+                onPressed: () {},
+                minWidth: 160.0,
+                color: Colors.blue,
+                child: text('Скачать',
+                    color: Colors.white, size: 14, isBold: true),
+              )
+            : Container(),
       ],
     );
 
@@ -96,7 +97,7 @@ class BookDetailPage extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: Column(
                   children: <Widget>[
-                    Text(
+                    SelectableText(
                       book.content,
                       style: TextStyle(fontSize: 16.0, height: 1.5),
                     ),

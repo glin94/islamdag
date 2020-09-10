@@ -3,8 +3,8 @@ import 'package:islamdag/resources/repository.dart';
 
 import '../utils.dart';
 
-class PrayTimePage extends StatelessWidget {
-  const PrayTimePage({Key key}) : super(key: key);
+class PrayTimeScreen extends StatelessWidget {
+  const PrayTimeScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class PrayTimePage extends StatelessWidget {
             return Scaffold(
                 appBar: PreferredSize(
                   preferredSize:
-                      Size.fromHeight(MediaQuery.of(context).size.height / 13),
+                      Size.fromHeight(MediaQuery.of(context).size.height / 10),
                   child: Column(
                     children: <Widget>[
                       SizedBox(
@@ -53,31 +53,40 @@ class PrayTimePage extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10, right: 25),
                           child: Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Дата",
-                                ),
-                                Text(
-                                  "Фад.",
-                                ),
-                                Text(
-                                  "Вос.",
-                                ),
-                                Text(
-                                  "Зухр",
-                                ),
-                                Text(
-                                  "Аср",
-                                ),
-                                Text(
-                                  "Маг.",
-                                ),
-                                Text(
-                                  "Иша",
-                                ),
-                              ],
+                            child: DefaultTextStyle(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .apply(color: Theme.of(context).canvasColor),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    "Дата",
+                                    style: TextStyle(
+                                        color: Theme.of(context).accentColor),
+                                  ),
+                                  Text(
+                                    "Фад.",
+                                  ),
+                                  Text(
+                                    "Вос.",
+                                  ),
+                                  Text(
+                                    "Зухр",
+                                  ),
+                                  Text(
+                                    "Аср",
+                                  ),
+                                  Text(
+                                    "Маг.",
+                                  ),
+                                  Text(
+                                    "Иша",
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -91,6 +100,7 @@ class PrayTimePage extends StatelessWidget {
                     padding: EdgeInsets.all(8),
                     child: Center(
                       child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
                           child: Column(
                               children: list
                                   .map<DefaultTextStyle>((entry) =>
@@ -109,9 +119,9 @@ class PrayTimePage extends StatelessWidget {
                                             decoration: BoxDecoration(
                                                 color:
                                                     list.indexOf(entry) % 2 == 0
-                                                        ? Colors.grey
+                                                        ? Colors.blue
                                                             .withOpacity(0.3)
-                                                        : Colors.blue
+                                                        : Colors.grey
                                                             .withOpacity(0.3),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(15))),
@@ -156,93 +166,8 @@ class PrayTimePage extends StatelessWidget {
                                       ))
                                   .toList())),
                     )));
-
-            // return Row(
-            //   children: <Widget>[
-            //     Column(
-            //         children: list
-            //             .map((entry) => Text(
-            //                   "${list.indexOf(entry) + 1}",
-            //                   style: TextStyle(
-            //                       color: list.indexOf(entry) + 1 ==
-            //                               DateTime.now().day
-            //                           ? Colors.red
-            //                           : Colors.black),
-            //                 ))
-            //             .toList()),
-            //     Column(
-            //         children: list
-            //             .map((entry) => Text(
-            //                   entry["namaz_1"],
-            //                   style: TextStyle(
-            //                       color: list.indexOf(entry) + 1 ==
-            //                               DateTime.now().day
-            //                           ? Colors.red
-            //                           : Colors.black),
-            //                 ))
-            //             .toList()),
-            //   ],
-            // );
-
-            // SingleChildScrollView(
-
-            //   child:
-
-            //   DataTable(
-            //       columnSpacing: 14,
-            //       columns: [
-            //         DataColumn(
-            //             label: Text(
-            //           "Дата",
-            //         )),
-            //         DataColumn(
-            //             label: Text(
-            //           "Фад.",
-            //         )),
-            //         DataColumn(
-            //             label: Text(
-            //           "Вос.",
-            //         )),
-            //         DataColumn(
-            //             label: Text(
-            //           "Зухр",
-            //         )),
-            //         DataColumn(
-            //             label: Text(
-            //           "Аср",
-            //         )),
-            //         DataColumn(
-            //             label: Text(
-            //           "Маг.",
-            //         )),
-            //         DataColumn(
-            //             label: Text(
-            //           "Иша",
-            //         )),
-            //       ],
-            //       rows: list
-            //           .map<DataRow>((entry) => DataRow(cells: [
-            //                 DataCell(Text(
-            //                   "${list.indexOf(entry) + 1}",
-            //                   style: TextStyle(
-            //                       color: list.indexOf(entry) + 1 ==
-            //                               DateTime.now().day
-            //                           ? Colors.red
-            //                           : Colors.black),
-            //                 )),
-            //                 DataCell(Text(entry["namaz_1"])),
-            //                 DataCell(Text(entry["voshod"])),
-            //                 DataCell(Text(entry["namaz_2"])),
-            //                 DataCell(Text(entry["namaz_3"])),
-            //                 DataCell(Text(entry["namaz_4"])),
-            //                 DataCell(Text(entry["namaz_5"])),
-            //               ]))
-            //           .toList()),
-            // );
           } else
-            return Center(
-              child: Text(snapshot.error.toString()),
-            );
+            return Center(child: CircularProgressIndicator());
         });
   }
 }

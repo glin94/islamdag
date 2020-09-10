@@ -1,3 +1,10 @@
+import 'package:html_unescape/html_unescape_small.dart';
+import 'package:share/share.dart';
+
+import 'models/article.dart';
+
+const String url = 'http://islamdag.ru';
+
 const categories = [
   //{"Актуальное интервью": "articles/intervy"},
   {"Все об Исламе": "articles/vseobislame"},
@@ -9,6 +16,7 @@ const categories = [
   {"Мы в Исламе": "articles/v-islame"},
   {"На родном": "articles/narodnom"}
 ];
+
 String getMonthsName(int number) {
   switch (number) {
     case 1:
@@ -49,4 +57,9 @@ String getMonthsName(int number) {
     default:
       return "Месяц не определен";
   }
+}
+
+converter(String html) {
+  var unescape = new HtmlUnescape();
+  return unescape.convert(html);
 }

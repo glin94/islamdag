@@ -2,18 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:islamdag/bloc/article_bloc/article_bloc.dart';
-import 'package:islamdag/widgets/article_card_item.dart';
+import 'package:islamdag/screens/library_screen.dart';
+import 'package:islamdag/widgets/video_item.dart';
 
 import 'widgets.dart';
 
-class ArticlesList extends StatefulWidget {
+class VideosList extends StatefulWidget {
+  const VideosList({Key key}) : super(key: key);
   @override
-  _ArticlesListState createState() => _ArticlesListState();
+  _VideosListState createState() => _VideosListState();
 }
 
-class _ArticlesListState extends State<ArticlesList> {
+class _VideosListState extends State<VideosList> {
   final _scrollController = ScrollController();
   ArticleBloc _articleBloc;
+
   @override
   void initState() {
     super.initState();
@@ -42,20 +45,26 @@ class _ArticlesListState extends State<ArticlesList> {
                 child: Text("Возникли проблемы с загрузкой 😕"));
           case ArticleStatus.success:
             if (state.articles.isEmpty) {
-              return const Center(child: Text('Статей пока нет...'));
+              return const Center(child: Text('Видео пока нет...'));
             }
-            return ListView.builder(
+
+            return ListView.separated(
+              separatorBuilder: (_, i) => Container(
+                height: 0.5,
+                color: Theme.of(context).accentColor,
+              ),
               physics: BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return index >= state.articles.length
                     ? BottomLoader()
-                    : ArticleCardItem(article: state.articles[index]);
+                    : VideoItem(video: state.articles[index]);
               },
               itemCount: state.hasReachedMax
                   ? state.articles.length
                   : state.articles.length + 1,
               controller: _scrollController,
             );
+
           default:
             return const Center(child: CircularProgressIndicator());
         }
@@ -79,43 +88,3 @@ class _ArticlesListState extends State<ArticlesList> {
     return currentScroll >= (maxScroll * 0.9);
   }
 }
-
-// class ArticlesList extends StatelessWidget {
-//   final String slug;
-//   const ArticlesList({
-//     Key key,
-//     this.slug,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         color: Colors.white,
-//         child: FutureBuilder(
-//             future: Repository.get().getArticles(slug, 0),
-//             builder:
-//                 (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
-//               switch (snapshot.connectionState) {
-//                 case ConnectionState.none:
-//                   return Text('Нет данных 😶');
-//                 case ConnectionState.active:
-//                 case ConnectionState.waiting:
-//                   return Center(
-//                     child: CircularProgressIndicator(),
-//                   );
-//                 case ConnectionState.done:
-//                   {
-//                     return snapshot.hasData
-//                         ? ListView.builder(
-//                             physics: BouncingScrollPhysics(),
-//                             itemCount: snapshot.data.length,
-//                             itemBuilder: (c, i) =>
-//                                 ArticleCardItem(article: snapshot.data[i]))
-//                         : Center(
-//                             child: Text("Возникли проблемы с загрузкой 😕"));
-//                   }
-//               }
-//               return Container();
-//             }));
-//   }
-// }

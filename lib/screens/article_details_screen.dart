@@ -1,43 +1,50 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:islamdag/models/article.dart';
 import 'package:islamdag/resources/repository.dart';
 import 'package:islamdag/widgets/carousel_images.dart';
+import 'package:islamdag/widgets/html_render.dart';
+import 'package:islamdag/widgets/share_button.dart';
 
-class ArticleDetailPage extends StatelessWidget {
+class ArticleDetailScreen extends StatelessWidget {
   final Article article;
 
-  const ArticleDetailPage({Key key, this.article}) : super(key: key);
+  const ArticleDetailScreen({Key key, this.article}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          actions: [
+            ShareButton(
+              item: article,
+            )
+          ],
           centerTitle: true,
           title: Text("Новости"),
         ),
         body: Scrollbar(
-          child: ListView(physics: ClampingScrollPhysics(), children: <Widget>[
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 100,
+            child:
+                ListView(physics: ClampingScrollPhysics(), children: <Widget>[
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 100,
+          ),
+          GestureDetector(
+            onTap: () async {
+              print(await Repository.get().getPrayTime());
+            },
+            child: CarouselImages(
+              images: article.images,
             ),
-            GestureDetector(
-              onTap: () async {
-                print(await Repository.get().getPrayTime());
-              },
-              child: CarouselImages(
-                images: article.images,
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 100,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 100,
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
               child: Column(
                 children: <Widget>[
                   Text(article.title,
+                      textAlign: TextAlign.left,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
@@ -75,37 +82,9 @@ class ArticleDetailPage extends StatelessWidget {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 100,
                   ),
-                  HtmlWidget(
-                    article.content,
-                    enableCaching: true,
-                    webView: true,
-                    textStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        .copyWith(fontSize: 16),
-                  ),
-                  // Html(
-                  //   data: article.content,
-                  //   onLinkTap: (url) {
-                  //     // open url in a webview
-                  //   },
-                  //   style: {
-                  //     "p": Style(
-                  //       padding: EdgeInsets.zero,
-                  //       fontSize: FontSize(16),
-                  //     ),
-                  //   },
-                  //   onImageTap: (src) {
-                  //     // Display the image in large form.
-                  //   },
-                  // )
-                  // SizedBox(
-                  //   height: MediaQuery.of(context).size.height / 100,
-                  // ),
+                  HtmlRendering(content: article.content)
                 ],
-              ),
-            ),
-          ]),
-        ));
+              ))
+        ])));
   }
 }

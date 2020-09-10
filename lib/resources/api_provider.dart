@@ -1,20 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart' as prefix0;
-import 'package:html_unescape/html_unescape.dart';
 import 'package:islamdag/models/article.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:dio/dio.dart';
 
-final String url = 'http://islamdag.ru/json';
-Dio dio = new Dio();
+import '../utils.dart';
 
-String htmlEnescape(String s) {
-  var unescape = new HtmlUnescape();
-  var text = unescape.convert(s);
-  return text;
-}
+Dio dio = new Dio();
 
 List<Article> parseArticles(var responseBody) {
   var parsed = responseBody["nodes"].cast<Map<String, dynamic>>();
@@ -27,7 +19,7 @@ Article parseArticle(String responseBody) {
 }
 
 Future<Map<String, dynamic>> fetchPrayTime() async {
-  String apiUrl = "$url/namaz.json";
+  String apiUrl = "$url/json/namaz.json";
   final response = await dio.get(apiUrl);
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -42,8 +34,21 @@ Future<Map<String, dynamic>> fetchPrayTime() async {
   }
 }
 
+Future<bool> sendQuestion(String name, String question, String email) async {
+  var isSend = false;
+  final response = await dio.post("$url/json/mail.php",
+      data: {"name": name, "question": question, "email": email});
+  if (response.statusCode == 200) {
+    isSend = true;
+  } else {
+    isSend = false;
+    throw new Exception("Failed to send");
+  }
+  return isSend;
+}
+
 Future<List<Article>> fetchArticles(String slug, int page) async {
-  String apiUrl = '$url/$slug';
+  String apiUrl = '$url/json/$slug';
   final response = await dio.get(apiUrl, queryParameters: {"page": page});
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
