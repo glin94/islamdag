@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:islamdag/models/article.dart';
 import 'package:islamdag/resources/repository.dart';
-import 'package:islamdag/widgets/carousel_images.dart';
-import 'package:islamdag/widgets/html_render.dart';
-import 'package:islamdag/widgets/share_button.dart';
+import 'package:islamdag/widgets/widgets.dart';
 
 class ArticleDetailScreen extends StatelessWidget {
   final Article article;
@@ -20,7 +18,7 @@ class ArticleDetailScreen extends StatelessWidget {
             )
           ],
           centerTitle: true,
-          title: Text("Новости"),
+          title: Text(article.title),
         ),
         body: Scrollbar(
             child:
@@ -40,36 +38,41 @@ class ArticleDetailScreen extends StatelessWidget {
             height: MediaQuery.of(context).size.height / 100,
           ),
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-              child: Column(
-                children: <Widget>[
-                  Text(article.title,
+            padding: const EdgeInsets.all(6.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 6),
+                  child: Text(article.title,
                       textAlign: TextAlign.left,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
                           .copyWith(fontSize: 18)),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 100,
-                  ),
-                  Row(
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 100,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
                         article.date,
                         style: Theme.of(context).textTheme.bodyText1.copyWith(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                              color: Colors.blue,
+                            ),
                       ),
                       Row(
                         children: <Widget>[
                           Text(
                             article.totalCount,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                .copyWith(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
+                            style:
+                                Theme.of(context).textTheme.bodyText1.copyWith(
+                                      color: Colors.blue,
+                                    ),
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 100,
@@ -79,12 +82,14 @@ class ArticleDetailScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 100,
-                  ),
-                  HtmlRendering(content: article.content)
-                ],
-              ))
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 100,
+                ),
+                HtmlRendering(content: article.content)
+              ],
+            ),
+          )
         ])));
   }
 }

@@ -45,21 +45,23 @@ class _FatawasListState extends State<FatawasList> {
             if (state.articles.isEmpty) {
               return const Center(child: Text('Статей пока нет...'));
             }
-            return ListView.separated(
-              separatorBuilder: (_, i) => Container(
-                height: 0.5,
-                color: Theme.of(context).accentColor,
+            return Scrollbar(
+              child: ListView.separated(
+                separatorBuilder: (_, i) => Container(
+                  height: 0.5,
+                  color: Theme.of(context).accentColor,
+                ),
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  return index >= state.articles.length
+                      ? BottomLoader()
+                      : FatawaItem(article: state.articles[index]);
+                },
+                itemCount: state.hasReachedMax
+                    ? state.articles.length
+                    : state.articles.length + 1,
+                controller: _scrollController,
               ),
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return index >= state.articles.length
-                    ? BottomLoader()
-                    : FatawaItem(article: state.articles[index]);
-              },
-              itemCount: state.hasReachedMax
-                  ? state.articles.length
-                  : state.articles.length + 1,
-              controller: _scrollController,
             );
           default:
             return const Center(child: CircularProgressIndicator());

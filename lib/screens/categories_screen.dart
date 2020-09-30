@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:islamdag/bloc/article_bloc/article_bloc.dart';
 import 'package:islamdag/utils.dart';
-import 'package:islamdag/widgets/articles_list.dart';
+import 'package:islamdag/widgets/widgets.dart';
 
 class CategoriesScreen extends StatelessWidget {
   @override

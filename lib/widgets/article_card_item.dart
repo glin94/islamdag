@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:islamdag/models/article.dart';
-import 'package:islamdag/screens/article_details_screen.dart';
+import 'package:islamdag/screens/screens.dart';
 
 class ArticleCardItem extends StatelessWidget {
   final Article article;
@@ -31,9 +31,9 @@ class ArticleCardItem extends StatelessWidget {
                   tag: article.id,
                   child: CachedNetworkImage(
                       errorWidget: (context, url, error) =>
-                          Image.asset("assets/logo.png"),
+                          Image.asset("assets/splash_logo.png"),
                       placeholder: (context, url) =>
-                          Image.asset("assets/logo.png"),
+                          Image.asset("assets/splash_logo.png"),
                       fit: BoxFit.cover,
                       imageUrl: article.images[0]["src"]),
                 ),

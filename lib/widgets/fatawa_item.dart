@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:islamdag/models/article.dart';
-import 'package:islamdag/screens/fatawa_details_screen.dart';
+import 'package:islamdag/screens/screens.dart';
 
 import '../utils.dart';
 

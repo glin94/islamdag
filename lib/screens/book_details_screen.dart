@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:islamdag/models/article.dart';
-import 'package:islamdag/widgets/share_button.dart';
+import 'package:islamdag/utils.dart';
+import 'package:islamdag/widgets/widgets.dart';
 
 class BookDetailScreen extends StatelessWidget {
   final Article book;
@@ -34,7 +35,7 @@ class BookDetailScreen extends StatelessWidget {
                         imageUrl: book.images[0]['src'],
                         fit: BoxFit.cover,
                       )
-                    : Image.asset("assets/logo.png")),
+                    : Image.asset("assets/splash_logo.png")),
           ),
         ),
       ],
@@ -63,7 +64,10 @@ class BookDetailScreen extends StatelessWidget {
         SizedBox(height: MediaQuery.of(context).size.height / 50),
         book.url != null
             ? MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  print(book.url);
+                  launchURL(book.url, context);
+                },
                 minWidth: 160.0,
                 color: Colors.blue,
                 child: text('Скачать',
@@ -94,6 +98,7 @@ class BookDetailScreen extends StatelessWidget {
               color: Colors.white,
             ),
             child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.all(16.0),
                 child: Column(
                   children: <Widget>[

@@ -16,7 +16,7 @@ class Article extends Equatable with HiveObject {
   String content;
 
   @HiveField(4)
-  String url;
+  String path;
 
   @HiveField(5)
   String totalCount;
@@ -36,17 +36,21 @@ class Article extends Equatable with HiveObject {
   @HiveField(10)
   String voprosi;
 
+  @HiveField(11)
+  String url;
+
   Article(
       {this.id,
       this.voprosi,
       this.isReading,
       this.isFavored,
       this.title,
-      this.url,
+      this.path,
       this.author,
       this.content,
       this.date,
       this.images,
+      this.url,
       this.totalCount});
 
   factory Article.fromJson(Map<dynamic, dynamic> jsonArticle) {
@@ -60,9 +64,8 @@ class Article extends Equatable with HiveObject {
         date: jsonArticle["created"],
         content: jsonArticle['body'],
         author: jsonArticle["field_avtor"],
-        url: jsonArticle["path"] ??
-            jsonArticle["field_book"] ??
-            jsonArticle["field_videoteka_new"],
+        path: jsonArticle["path"],
+        url: jsonArticle["field_book"] ?? jsonArticle["field_videoteka_new"],
         totalCount: jsonArticle["totalcount"]);
   }
 

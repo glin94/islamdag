@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:islamdag/bloc/article_bloc/article_bloc.dart';
-import 'package:islamdag/screens/library_screen.dart';
+import 'package:islamdag/screens/screens.dart';
 
 import 'widgets.dart';
 
@@ -49,54 +49,48 @@ class _BooksListState extends State<BooksList> {
               return const Center(child: Text('Видео пока нет...'));
             }
 
-            return CustomScrollView(
-              controller: _scrollController,
-              primary: false,
-              slivers: <Widget>[
-                !widget.isList
-                    ? SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return index >= state.articles.length
-                              ? BottomLoader()
-                              : BookListTile(book: state.articles[index]);
-                        },
-                        childCount: state.hasReachedMax
-                            ? state.articles.length
-                            : state.articles.length + 1,
-                      ))
-                    : SliverPadding(
-                        padding: EdgeInsets.all(16.0),
-                        sliver: SliverGrid(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 2 / 3,
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 20.0,
-                            crossAxisSpacing: 20.0,
-                          ),
+            return Scrollbar(
+              child: CustomScrollView(
+                controller: _scrollController,
+                primary: false,
+                slivers: <Widget>[
+                  !widget.isList
+                      ? SliverList(
                           delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return index >= state.articles.length
-                                  ? BottomLoader()
-                                  : BookGridTile(book: state.articles[index]);
-                            },
-                            childCount: state.hasReachedMax
-                                ? state.articles.length
-                                : state.articles.length + 1,
-                          ),
+                          (BuildContext context, int index) {
+                            return index >= state.articles.length
+                                ? BottomLoader()
+                                : BookListTile(book: state.articles[index]);
+                          },
+                          childCount: state.hasReachedMax
+                              ? state.articles.length
+                              : state.articles.length + 1,
                         ))
-              ],
+                      : SliverPadding(
+                          padding: EdgeInsets.all(16.0),
+                          sliver: SliverGrid(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: 2 / 3,
+                              crossAxisCount: 3,
+                              mainAxisSpacing: 20.0,
+                              crossAxisSpacing: 20.0,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                                return index >= state.articles.length
+                                    ? BottomLoader()
+                                    : BookGridTile(book: state.articles[index]);
+                              },
+                              childCount: state.hasReachedMax
+                                  ? state.articles.length
+                                  : state.articles.length + 1,
+                            ),
+                          ))
+                ],
+              ),
             );
-          // return ListView.builder(
-          //   physics: BouncingScrollPhysics(),
-          //   itemBuilder: (BuildContext context, int index) {
-          //     return index >= state.articles.length
-          //         ? BottomLoader()
-          //         : BookListTile(book: state.articles[index]);
-          //   },
-          //   itemCount:
-          // );
+
           default:
             return const Center(child: CircularProgressIndicator());
         }

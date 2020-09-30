@@ -14,6 +14,6 @@ class ShareButton extends StatelessWidget {
     return IconButton(
         icon: Icon(FlutterIcons.share_mco),
         onPressed: () => Share.share(
-            "${item.title}\n${item.url.contains("http") ? item.url : url + item.url}"));
+            "${item.title}\n${item.path.contains("http") ? item.path : url + item.path}"));
   }
 }

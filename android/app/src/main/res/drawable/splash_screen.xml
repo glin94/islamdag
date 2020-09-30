@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+
+    <item android:drawable="@android:color/white"/>
+
+    <item
+        android:drawable="@drawable/splash_top"
+        android:gravity="top" />
+    <item
+        android:drawable="@drawable/splash_logo"
+        android:gravity="center" />
+    <item
+        android:drawable="@drawable/splash_bottom"
+        android:gravity="bottom" />
+
+    <!--    <item>
+            <bitmap
+                android:gravity="center"
+                android:src="@drawable/logo_minmol" />
+        </item>-->
+</layer-list>

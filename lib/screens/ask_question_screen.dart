@@ -22,6 +22,7 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
           padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.height / 23),
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(children: <Widget>[
               Column(
                 children: <Widget>[
@@ -83,7 +84,7 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
                             height: MediaQuery.of(context).size.height / 50),
                         Container(
                           child: TextFormField(
-                            maxLengthEnforced: true,
+                            maxLines: 8,
                             keyboardType: TextInputType.text,
                             keyboardAppearance: Brightness.dark,
                             decoration: InputDecoration(
@@ -112,10 +113,9 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
                   )
                 ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height / 6),
+              SizedBox(height: MediaQuery.of(context).size.height / 20),
               Builder(
                 builder: (context) => RaisedButton(
-                    elevation: 5,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(7.0)),
                     color: Theme.of(context).accentColor,

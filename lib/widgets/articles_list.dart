@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:islamdag/bloc/article_bloc/article_bloc.dart';
-import 'package:islamdag/widgets/article_card_item.dart';
 
 import 'widgets.dart';
 

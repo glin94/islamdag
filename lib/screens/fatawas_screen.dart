@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:islamdag/bloc/article_bloc/article_bloc.dart';
-import 'package:islamdag/widgets/fatawas_list.dart';
-import 'package:islamdag/widgets/floating_button.dart';
+import 'package:islamdag/widgets/widgets.dart';
 
 class FatawasScreen extends StatelessWidget {
   @override

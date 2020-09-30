@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:islamdag/screens/ask_question_screen.dart';
+import 'package:islamdag/screens/screens.dart';
 
 class FatawaFloatingButton extends StatelessWidget {
   @override

@@ -50,7 +50,4 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       }
     }
   }
-
-  Future<ArticleState> _mapArticleFetchedToState(
-      ArticleState state, int page) async {}
 }

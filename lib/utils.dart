@@ -1,12 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:html_unescape/html_unescape_small.dart';
-import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import 'models/article.dart';
+import 'screens/screens.dart';
 
 const String url = 'http://islamdag.ru';
+var listDrawer = [
+  {
+    "text": "Радио",
+    "icon": FlutterIcons.newspaper_minus_mco,
+    "body": RadioScreen()
+  },
+  {
+    "text": "Новости",
+    "icon": FlutterIcons.newspaper_mco,
+    "body": NewsListScreen()
+  },
+  {
+    "text": "Статьи",
+    "icon": FlutterIcons.post_outline_mco,
+    "body": CategoriesScreen()
+  },
+  {
+    "text": "Время молитвы",
+    "icon": FlutterIcons.clock_faw5,
+    "body": PrayTimeScreen()
+  },
+  {
+    "text": "Видеотека",
+    "icon": FlutterIcons.library_video_mco,
+    "body": VideosScreen()
+  },
+  {
+    "text": "Библиотека",
+    "icon": FlutterIcons.library_mco,
+    "body": LibraryScreen()
+  },
+  {"text": "Фетвы", "icon": FlutterIcons.question_oct, "body": FatawasScreen()}
+];
 
 const categories = [
-  //{"Актуальное интервью": "articles/intervy"},
   {"Все об Исламе": "articles/vseobislame"},
   {"Вероучение": "articles/verouchenie"},
   {"История": "articles/istoriya"},
@@ -14,7 +48,8 @@ const categories = [
   {"Аналитика": "articles/analitika"},
   {"Мусульманка": "articles/musulmanka"},
   {"Мы в Исламе": "articles/v-islame"},
-  {"На родном": "articles/narodnom"}
+  {"Актуальное интервью": "articles/intervy"},
+  {"На родном": "articles/narodnom"},
 ];
 
 String getMonthsName(int number) {
@@ -56,6 +91,15 @@ String getMonthsName(int number) {
       return "Декабрь";
     default:
       return "Месяц не определен";
+  }
+}
+
+launchURL(String url, BuildContext context) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    Scaffold.of(context)
+        .showSnackBar(SnackBar(content: Text("Недопустимая ссылка")));
   }
 }
 

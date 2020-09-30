@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:islamdag/bloc/article_bloc/article_bloc.dart';
 import 'package:islamdag/models/article.dart';
-import 'package:islamdag/screens/book_details_screen.dart';
-import 'package:islamdag/widgets/books_list.dart';
+import 'package:islamdag/widgets/widgets.dart';
+
+import './screens.dart';
 
 class LibraryScreen extends StatefulWidget {
   @override
@@ -73,7 +74,7 @@ class BookListTile extends StatelessWidget {
                                                     color: Colors.grey[300],
                                                   )))
                                           : Image.asset(
-                                              "assets/logo.png",
+                                              "assets/splash_logo.png",
                                               height: 120,
                                               width: 80,
                                             )))
@@ -151,7 +152,7 @@ class BookGridTile extends StatelessWidget {
                     fit: BoxFit.cover,
                   )
                 : Image.asset(
-                    "assets/logo.png",
+                    "assets/splash_logo.png",
                   )),
       ),
     );

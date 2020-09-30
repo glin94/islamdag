@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:islamdag/bloc/article_bloc/article_bloc.dart';
-import 'package:islamdag/screens/library_screen.dart';
-import 'package:islamdag/widgets/video_item.dart';
 
 import 'widgets.dart';
 
@@ -48,21 +46,24 @@ class _VideosListState extends State<VideosList> {
               return const Center(child: Text('Видео пока нет...'));
             }
 
-            return ListView.separated(
-              separatorBuilder: (_, i) => Container(
-                height: 0.5,
-                color: Theme.of(context).accentColor,
+            return Scrollbar(
+              child: ListView.separated(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                separatorBuilder: (_, i) => Container(
+                  height: 1.5,
+                  color: Theme.of(context).backgroundColor,
+                ),
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  return index >= state.articles.length
+                      ? BottomLoader()
+                      : VideoItem(video: state.articles[index]);
+                },
+                itemCount: state.hasReachedMax
+                    ? state.articles.length
+                    : state.articles.length + 1,
+                controller: _scrollController,
               ),
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return index >= state.articles.length
-                    ? BottomLoader()
-                    : VideoItem(video: state.articles[index]);
-              },
-              itemCount: state.hasReachedMax
-                  ? state.articles.length
-                  : state.articles.length + 1,
-              controller: _scrollController,
             );
 
           default:

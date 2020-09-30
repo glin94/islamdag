@@ -23,9 +23,9 @@ class _CarouselImagesState extends State<CarouselImages> {
                     .map<Widget>(
                       (e) => CachedNetworkImage(
                           errorWidget: (context, url, error) =>
-                              Image.asset("assets/logo.png"),
+                              Image.asset("assets/splash_logo.png"),
                           placeholder: (context, url) =>
-                              Image.asset("assets/logo.png"),
+                              Image.asset("assets/splash_logo.png"),
                           imageUrl: widget.images[widget.images.indexOf(e)]
                               ['src'],
                           fit: BoxFit.cover),
@@ -41,8 +41,9 @@ class _CarouselImagesState extends State<CarouselImages> {
           )
         : CachedNetworkImage(
             errorWidget: (context, url, error) =>
-                Image.asset("assets/logo.png"),
-            placeholder: (context, url) => Image.asset("assets/logo.png"),
+                Image.asset("assets/splash_logo.png"),
+            placeholder: (context, url) =>
+                Image.asset("assets/splash_logo.png"),
             imageUrl: widget.images[0]['src'],
             fit: BoxFit.cover);
     // Stack(children: <Widget>[
