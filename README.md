@@ -1,3 +1,3 @@
 # islamdag
 
-A new Flutter project.
+Приложение для сайта islamdag.ru
