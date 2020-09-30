@@ -1,3 +1,4 @@
-# IslamDag
+# islamdag
 
-Приложение для сайта islamdag.ru
+
+A new Flutter project.
