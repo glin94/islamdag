@@ -25,8 +25,8 @@ class HtmlRendering extends StatelessWidget {
       customRender: {
         "p": (pcontext, child, atribb, element) {
           return element.className.contains("rteright") &&
-                      element.firstChild.text.contains(RegExp(r'[ء-ي]')) ||
-                  element.text.contains(RegExp(r'[ء-ي]'))
+                  element.text.contains(RegExp(r'[ء-ي]')) &&
+                  !element.text.contains(RegExp(r'[А-я]'))
               ? SelectableText(
                   element.firstChild.text,
                   textDirection: TextDirection.rtl,
@@ -42,23 +42,6 @@ class HtmlRendering extends StatelessWidget {
                       imageUrl: url + element.firstChild.attributes['href'])
                   : child;
         },
-        // "span": (pcontext, child, atribb, element) {
-        //   return element.firstChild.text.contains(RegExp(r'[ء-ي]'))
-        //       ? SelectableText(
-        //           element.firstChild.text,
-        //           textDirection: TextDirection.rtl,
-        //           toolbarOptions: ToolbarOptions(copy: true, selectAll: true),
-        //           style: Theme.of(context)
-        //               .textTheme
-        //               .headline5
-        //               .copyWith(height: 1.6),
-        //         )
-        //       : element.innerHtml.contains(RegExp('.*\.(gif|jpe?g|bmp|png)'))
-        //           ? CachedNetworkImage(
-        //               imageUrl: url + element.firstChild.attributes['href'] ??
-        //                   element.firstChild.attributes['alt src'])
-        //           : child;
-        // },
       },
     );
   }

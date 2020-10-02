@@ -19,17 +19,18 @@ class _RadioScreenState extends State<RadioScreen> {
   }
 
   Future<void> initRadioService() async {
-    try {
-      await _flutterRadioPlayer.init("Радио", "Прямой эфир",
-          "http://s02.radio-tochka.com:6090/radio", "false");
-    } on PlatformException {
-      print("Ошибка регистрации сервиса");
-    }
+    if (await _flutterRadioPlayer.isPlaying())
+      try {
+        await _flutterRadioPlayer.init("Радио", "Прямой эфир",
+            "http://online.radiovatan.ru:8000/live", "false");
+      } on PlatformException {
+        print("Ошибка регистрации сервиса");
+      }
   }
 
   @override
   void dispose() {
-    _flutterRadioPlayer.stop();
+    _flutterRadioPlayer.pause();
     super.dispose();
   }
 
@@ -108,7 +109,6 @@ class _RadioScreenState extends State<RadioScreen> {
                               : Icon(
                                   FlutterIcons.play_circle_outline_mdi,
                                 ));
-
                       break;
                   }
                 }),
