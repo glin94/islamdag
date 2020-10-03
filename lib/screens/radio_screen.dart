@@ -19,19 +19,12 @@ class _RadioScreenState extends State<RadioScreen> {
   }
 
   Future<void> initRadioService() async {
-    if (await _flutterRadioPlayer.isPlaying())
-      try {
-        await _flutterRadioPlayer.init("Радио", "Прямой эфир",
-            "http://online.radiovatan.ru:8000/live", "false");
-      } on PlatformException {
-        print("Ошибка регистрации сервиса");
-      }
-  }
-
-  @override
-  void dispose() {
-    _flutterRadioPlayer.pause();
-    super.dispose();
+    try {
+      await _flutterRadioPlayer.init("Радио", "Прямой эфир",
+          "http://online.radiovatan.ru:8000/live", "false");
+    } on PlatformException {
+      print("Ошибка регистрации сервиса");
+    }
   }
 
   @override
@@ -78,6 +71,7 @@ class _RadioScreenState extends State<RadioScreen> {
                   switch (returnData) {
                     case FlutterRadioPlayer.flutter_radio_stopped:
                       return RaisedButton(
+                          color: Theme.of(context).accentColor,
                           child: Text("Начать слушать заново"),
                           onPressed: () async {
                             await initRadioService();
@@ -87,6 +81,7 @@ class _RadioScreenState extends State<RadioScreen> {
                       return CircularProgressIndicator();
                     case FlutterRadioPlayer.flutter_radio_error:
                       return RaisedButton(
+                          color: Theme.of(context).accentColor,
                           child: Text("Повторить"),
                           onPressed: () async {
                             await initRadioService();
