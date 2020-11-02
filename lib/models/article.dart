@@ -39,6 +39,9 @@ class Article extends Equatable with HiveObject {
   @HiveField(11)
   String url;
 
+  @HiveField(12)
+  String categoryName;
+
   Article(
       {this.id,
       this.voprosi,
@@ -51,26 +54,61 @@ class Article extends Equatable with HiveObject {
       this.date,
       this.images,
       this.url,
+      this.categoryName,
       this.totalCount});
 
   factory Article.fromJson(Map<dynamic, dynamic> jsonArticle) {
     return Article(
-        voprosi: jsonArticle["field_voprosi"],
-        isFavored: false,
-        isReading: false,
-        title: jsonArticle['title'],
-        id: jsonArticle['nid'],
-        images: jsonArticle["field_image"],
-        date: jsonArticle["created"],
-        content: jsonArticle['body'],
-        author: jsonArticle["field_avtor"],
-        path: jsonArticle["path"],
-        url: jsonArticle["field_book"] ?? jsonArticle["field_videoteka_new"],
-        totalCount: jsonArticle["totalcount"]);
+            categoryName: parseCategoryName(jsonArticle["path"]),
+            voprosi: jsonArticle["field_voprosi"] ?? "",
+            isFavored: false,
+            isReading: false,
+            title: jsonArticle['title'] ?? "",
+            id: jsonArticle['nid'],
+            images: jsonArticle["field_image"] ?? [],
+            date: jsonArticle["created"] ?? "",
+            content: jsonArticle['body'] ?? "",
+            author: jsonArticle["field_avtor"],
+            path: jsonArticle["path"] ?? "",
+            url: jsonArticle["field_book"] ??
+                jsonArticle["field_videoteka_new"] ??
+                "",
+            totalCount: jsonArticle["totalcount"]) ??
+        "";
   }
-
-  @override
-  String toString() => 'Article { id: $id }';
+  static String parseCategoryName(String path) {
+    switch (path.split("/")[1]) {
+      case "verouchenie":
+        return "Вероучение";
+        break;
+      case "analitika":
+        return "Аналитика";
+        break;
+      case "istoriya":
+        return "История";
+        break;
+      case "lichnosti":
+        return "Личности";
+        break;
+      case "musulmanka":
+        return "Мусульманка";
+        break;
+      case "vse-ob-islame":
+        return "Все об Исламе";
+        break;
+      case "v-islame":
+        return "В исламе";
+        break;
+      case "intervy":
+        return "Интервью";
+        break;
+      case "news":
+        return "Новости";
+        break;
+      default:
+        return "Разное";
+    }
+  }
 
   @override
   List<Object> get props => [id, title, author];

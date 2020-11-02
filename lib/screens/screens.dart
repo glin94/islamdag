@@ -11,3 +11,5 @@ export 'pray_time_screen.dart';
 export 'videos_screen.dart';
 export 'radio_screen.dart';
 export 'video_fullscreen.dart';
+export 'main_screen.dart';
+export 'category_screen.dart';

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:islamdag/screens/screens.dart';
 
-class FatawaFloatingButton extends StatelessWidget {
+class AskButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
+    return IconButton(
+      tooltip: "Задать вопрос",
       onPressed: () => Navigator.push(
           context, MaterialPageRoute(builder: (c) => AskQuestionScreen())),
-      child: Icon(Icons.question_answer),
+      icon: const Icon(FlutterIcons.lead_pencil_mco),
     );
   }
 }

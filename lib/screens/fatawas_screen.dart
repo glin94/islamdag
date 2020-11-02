@@ -7,7 +7,7 @@ class FatawasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FatawaFloatingButton(),
+        // floatingActionButton: FatawaFloatingButton(),
         backgroundColor: Colors.white,
         body: BlocProvider(
             create: (_) => ArticleBloc("fatawa")..add(Fetch()),

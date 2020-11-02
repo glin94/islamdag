@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:islamdag/models/article.dart';
 import 'package:islamdag/screens/screens.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../utils.dart';
 
@@ -11,12 +12,12 @@ class FatawaItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (c) => FatawaDetailsPage(
-                    article: article,
-                  ))),
+      onTap: () => pushNewScreen(context,
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          screen: FatawaDetailsPage(
+            article: article,
+          )),
       child: Container(
         padding: EdgeInsets.all(15),
         child: Column(

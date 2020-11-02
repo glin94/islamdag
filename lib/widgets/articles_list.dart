@@ -37,13 +37,13 @@ class _ArticlesListState extends State<ArticlesList> {
       builder: (context, state) {
         switch (state.status) {
           case ArticleStatus.failure:
-            return const Center(
-                child: Text("Возникли проблемы с загрузкой 😕"));
+            return ConnectionErrorWidget(articleBloc: _articleBloc);
           case ArticleStatus.success:
             if (state.articles.isEmpty) {
               return const Center(child: Text('Статей пока нет...'));
             }
             return ListView.builder(
+              shrinkWrap: true,
               physics: BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return index >= state.articles.length
@@ -78,43 +78,3 @@ class _ArticlesListState extends State<ArticlesList> {
     return currentScroll >= (maxScroll * 0.9);
   }
 }
-
-// class ArticlesList extends StatelessWidget {
-//   final String slug;
-//   const ArticlesList({
-//     Key key,
-//     this.slug,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         color: Colors.white,
-//         child: FutureBuilder(
-//             future: Repository.get().getArticles(slug, 0),
-//             builder:
-//                 (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
-//               switch (snapshot.connectionState) {
-//                 case ConnectionState.none:
-//                   return Text('Нет данных 😶');
-//                 case ConnectionState.active:
-//                 case ConnectionState.waiting:
-//                   return Center(
-//                     child: CircularProgressIndicator(),
-//                   );
-//                 case ConnectionState.done:
-//                   {
-//                     return snapshot.hasData
-//                         ? ListView.builder(
-//                             physics: BouncingScrollPhysics(),
-//                             itemCount: snapshot.data.length,
-//                             itemBuilder: (c, i) =>
-//                                 ArticleCardItem(article: snapshot.data[i]))
-//                         : Center(
-//                             child: Text("Возникли проблемы с загрузкой 😕"));
-//                   }
-//               }
-//               return Container();
-//             }));
-//   }
-// }

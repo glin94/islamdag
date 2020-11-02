@@ -12,7 +12,7 @@ class ShareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        icon: Icon(FlutterIcons.share_mco),
+        icon: const Icon(FlutterIcons.share_mco),
         onPressed: () => Share.share(
             "${item.title}\n${item.path.contains("http") ? item.path : url + item.path}"));
   }

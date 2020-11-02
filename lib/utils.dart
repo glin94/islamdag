@@ -2,55 +2,107 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:html_unescape/html_unescape_small.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart' as intl;
 
 import 'screens/screens.dart';
 
 const String url = 'http://islamdag.ru';
 var listDrawer = [
-  {
-    "text": "Радио",
-    "icon": FlutterIcons.newspaper_minus_mco,
-    "body": RadioScreen()
-  },
-  {
-    "text": "Новости",
-    "icon": FlutterIcons.newspaper_mco,
-    "body": NewsListScreen()
-  },
-  {
-    "text": "Статьи",
-    "icon": FlutterIcons.post_outline_mco,
-    "body": CategoriesScreen()
-  },
-  {
-    "text": "Время молитвы",
-    "icon": FlutterIcons.clock_faw5,
-    "body": PrayTimeScreen()
-  },
+  {"text": " Главная", "icon": AntDesign.home, "screen": HomeScreen()},
+  {"text": "Статьи", "icon": AntDesign.profile, "screen": CategoriesScreen()},
   {
     "text": "Видеотека",
-    "icon": FlutterIcons.library_video_mco,
-    "body": VideosScreen()
+    "icon": FlutterIcons.social_youtube_sli,
+    "screen": VideosScreen()
   },
+  {"text": "Библиотека", "icon": AntDesign.book, "screen": LibraryScreen()},
   {
-    "text": "Библиотека",
-    "icon": FlutterIcons.library_mco,
-    "body": LibraryScreen()
-  },
-  {"text": "Фетвы", "icon": FlutterIcons.question_oct, "body": FatawasScreen()}
+    "text": "Фетвы",
+    "icon": AntDesign.questioncircleo,
+    "screen": FatawasScreen()
+  }
 ];
 
 const categories = [
-  {"Все об Исламе": "articles/vseobislame"},
+  {"Последние": "articles"},
+  {"Новости": "news"},
+  {"Аналитика": "articles/analitika"},
   {"Вероучение": "articles/verouchenie"},
   {"История": "articles/istoriya"},
   {"Личности": "articles/lichnosti"},
-  {"Аналитика": "articles/analitika"},
   {"Мусульманка": "articles/musulmanka"},
+  {"Все об Исламе": "articles/vseobislame"},
+  {"Здоровье": "articles/health"},
   {"Мы в Исламе": "articles/v-islame"},
   {"Актуальное интервью": "articles/intervy"},
   {"На родном": "articles/narodnom"},
 ];
+
+void initTimeLang() {
+  timeago.setLocaleMessages("ru", timeago.RuMessages());
+  var rus = intl.initializeDateFormatting("ru", null);
+  Future.wait([rus]);
+}
+
+String parseDateAgo(String s) {
+  String month = s.split(",").removeAt(1).split(" ")[1];
+  String str = s
+      .replaceAll(month, getMonthsNumber(month))
+      .split(",")
+      .sublist(1, 3)
+      .join(" ");
+  final time = str.split(" ").where((e) => e.isNotEmpty && e != "-").join("/");
+  DateTime d = DateFormat('M/dd/yyyy/hh:mm').parse(time);
+  return timeago.format(
+    d,
+    locale: "ru",
+    allowFromNow: true,
+  );
+}
+
+getMonthsNumber(String month) {
+  switch (month) {
+    case "Январь":
+      return "1";
+      break;
+    case "Февраль":
+      return "2";
+      break;
+    case "Март":
+      return "3";
+      break;
+    case "Апрель":
+      return "4";
+      break;
+    case "Май":
+      return "5";
+      break;
+    case "Июнь":
+      return "6";
+      break;
+    case "Июль":
+      return "7";
+      break;
+    case "Август":
+      return "8";
+      break;
+    case "Сентябрь":
+      return "9";
+      break;
+    case "Октябрь":
+      return "10";
+      break;
+    case "Ноябрь":
+      return "11";
+      break;
+    case "Декабрь":
+      return "12";
+      break;
+    default:
+  }
+}
 
 String getMonthsName(int number) {
   switch (number) {

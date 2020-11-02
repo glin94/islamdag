@@ -39,8 +39,7 @@ class _VideosListState extends State<VideosList> {
       builder: (context, state) {
         switch (state.status) {
           case ArticleStatus.failure:
-            return const Center(
-                child: Text("Возникли проблемы с загрузкой 😕"));
+            return ConnectionErrorWidget(articleBloc: _articleBloc);
           case ArticleStatus.success:
             if (state.articles.isEmpty) {
               return const Center(child: Text('Видео пока нет...'));

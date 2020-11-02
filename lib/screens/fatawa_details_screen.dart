@@ -9,8 +9,12 @@ class FatawaDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(article.title),
+        actions: [ShareButton(item: article)],
+        flexibleSpace: CustomGradient(),
+      ),
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text("Фетвы")),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <

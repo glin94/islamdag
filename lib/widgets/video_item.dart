@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:islamdag/models/article.dart';
 import 'package:islamdag/screens/video_fullscreen.dart';
+import 'package:islamdag/widgets/widgets.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'share_button.dart';
@@ -17,28 +19,28 @@ class VideoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (c) => VideoFullScreen(
-                  title: video.title,
-                  controller: YoutubePlayerController(
-                      initialVideoId: video.url.split("=")[1],
-                      flags: YoutubePlayerFlags(
-                          autoPlay: true,
-                          hideThumbnail: true,
-                          controlsVisibleAtStart: true,
-                          captionLanguage: 'ru'))))),
+      onTap: () => pushNewScreen(context,
+          screen: VideoFullScreen(
+              title: video.title,
+              controller: YoutubePlayerController(
+                  initialVideoId: video.url.split("=")[1],
+                  flags: YoutubePlayerFlags(
+                      autoPlay: true,
+                      hideThumbnail: true,
+                      controlsVisibleAtStart: true,
+                      captionLanguage: 'ru'))),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.cupertino),
       child: Column(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           Container(
               child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
-              video.images == null
+              video.images.isEmpty
                   ? Image.asset(
                       "assets/header_logo.png",
                       height: MediaQuery.of(context).size.height / 3,
@@ -46,20 +48,13 @@ class VideoItem extends StatelessWidget {
                   : CachedNetworkImage(
                       colorBlendMode: BlendMode.darken,
                       color: Colors.transparent.withOpacity(0.7),
-                      errorWidget: (context, url, error) => Image.asset(
-                          "assets/header_logo.png",
-                          height: MediaQuery.of(context).size.height / 4),
-                      placeholder: (context, url) => Image.asset(
-                          "assets/header_logo.png",
-                          height: MediaQuery.of(context).size.height / 4),
+                      errorWidget: (context, url, error) =>
+                          Image.asset("assets/header_logo.png"),
+                      placeholder: (context, url) =>
+                          Image.asset("assets/header_logo.png"),
                       fit: BoxFit.cover,
                       imageUrl: video.images[0]["src"]),
               Image.asset("assets/youtube_icon.png")
-              // Icon(
-              //   Icons.play_arrow,
-              //   size: MediaQuery.of(context).size.height / 4,
-              //   color: Colors.black.withOpacity(.7),
-              // ),
             ],
           )),
           Container(color: Colors.black.withOpacity(1)),
@@ -78,7 +73,7 @@ class VideoItem extends StatelessWidget {
                             .textTheme
                             .headline6
                             .copyWith(fontSize: 17))),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 ShareButton(item: video)

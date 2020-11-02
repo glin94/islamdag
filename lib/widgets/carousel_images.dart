@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:islamdag/widgets/widgets.dart';
 
 class CarouselImages extends StatefulWidget {
   final List images;
@@ -22,10 +23,12 @@ class _CarouselImagesState extends State<CarouselImages> {
                 images: widget.images
                     .map<Widget>(
                       (e) => CachedNetworkImage(
-                          errorWidget: (context, url, error) =>
-                              Image.asset("assets/splash_logo.png"),
-                          placeholder: (context, url) =>
-                              Image.asset("assets/splash_logo.png"),
+                          errorWidget: (context, url, error) => Image.asset(
+                                "assets/splash_logo.png",
+                              ),
+                          placeholder: (context, url) => Image.asset(
+                                "assets/splash_logo.png",
+                              ),
                           imageUrl: widget.images[widget.images.indexOf(e)]
                               ['src'],
                           fit: BoxFit.cover),
@@ -39,46 +42,8 @@ class _CarouselImagesState extends State<CarouselImages> {
                 indicatorBgPadding: 10.0,
                 dotBgColor: Colors.transparent),
           )
-        : CachedNetworkImage(
-            errorWidget: (context, url, error) =>
-                Image.asset("assets/splash_logo.png"),
-            placeholder: (context, url) =>
-                Image.asset("assets/splash_logo.png"),
-            imageUrl: widget.images[0]['src'],
-            fit: BoxFit.cover);
-    // Stack(children: <Widget>[
-    //   CarouselSlider.builder(
-    //     itemCount: widget.images.length,
-    //     itemBuilder: (c, i) => CachedNetworkImage(
-    //         imageUrl: widget.images[i]['src'], fit: BoxFit.contain),
-    //     options: CarouselOptions(
-
-    //       onPageChanged: (index, reason) {
-    //       setState(() {
-    //         _current = index;
-    //       });
-    //     }),
-    //   ),
-    //   Positioned(
-    //     bottom: 10,
-    //     child: Row(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: widget.images.map((url) {
-    //         int index = widget.images.indexOf(url);
-    //         return Container(
-    //           width: 8.0,
-    //           height: 8.0,
-    //           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-    //           decoration: BoxDecoration(
-    //             shape: BoxShape.circle,
-    //             color: _current == index
-    //                 ? Color.fromRGBO(0, 0, 0, 0.9)
-    //                 : Color.fromRGBO(0, 0, 0, 0.4),
-    //           ),
-    //         );
-    //       }).toList(),
-    //     ),
-    //   )
-    // ]);
+        : CustomImageWidget(
+            images: widget.images,
+          );
   }
 }

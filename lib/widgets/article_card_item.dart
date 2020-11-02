@@ -1,8 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:islamdag/models/article.dart';
 import 'package:islamdag/screens/screens.dart';
+import 'package:islamdag/widgets/widgets.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class ArticleCardItem extends StatelessWidget {
   final Article article;
@@ -21,23 +22,14 @@ class ArticleCardItem extends StatelessWidget {
             fit: StackFit.expand,
             children: <Widget>[
               GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (c) => ArticleDetailScreen(
-                              article: article,
-                            ))),
-                child: Hero(
-                  tag: article.id,
-                  child: CachedNetworkImage(
-                      errorWidget: (context, url, error) =>
-                          Image.asset("assets/splash_logo.png"),
-                      placeholder: (context, url) =>
-                          Image.asset("assets/splash_logo.png"),
-                      fit: BoxFit.cover,
-                      imageUrl: article.images[0]["src"]),
-                ),
-              ),
+                  onTap: () => pushNewScreen(context,
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.cupertino,
+                      withNavBar: false,
+                      screen: ArticleDetailScreen(
+                        article: article,
+                      )),
+                  child: CustomImageWidget(images: article.images)),
               Positioned(
                   bottom: 0,
                   left: 0,
@@ -55,24 +47,11 @@ class ArticleCardItem extends StatelessWidget {
                     ),
                     padding:
                         EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          article.title,
-                          maxLines: 2,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1
-                              .copyWith(color: Colors.white, fontSize: 16),
-                        ),
-                        Text(
-                          article.date,
-                          style: Theme.of(context).textTheme.subtitle2.copyWith(
-                              color: Colors.blue, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    child: Text(
+                      article.title,
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.headline6.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ))
             ],

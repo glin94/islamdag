@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:islamdag/models/question.dart';
 import 'package:islamdag/resources/api_provider.dart';
+import 'package:islamdag/widgets/widgets.dart';
 
 class AskQuestionScreen extends StatefulWidget {
   @override
@@ -14,7 +15,10 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Фетвы"),
+          flexibleSpace: CustomGradient(),
+          title: Text(
+            "Фетвы",
+          ),
           automaticallyImplyLeading: true,
         ),
         backgroundColor: Colors.white,
@@ -84,7 +88,7 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
                             height: MediaQuery.of(context).size.height / 50),
                         Container(
                           child: TextFormField(
-                            maxLines: 8,
+                            maxLines: 6,
                             keyboardType: TextInputType.text,
                             keyboardAppearance: Brightness.dark,
                             decoration: InputDecoration(

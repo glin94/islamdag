@@ -23,12 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.12.2
-  flutter_html: ^1.0.2
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.3
-  hive: null
   hive_flutter:
     git:
       url: git://github.com/hivedb/hive.git
@@ -37,21 +31,29 @@ dependencies:
     git:
       url: git://github.com/hivedb/hive.git
       path: hive_generator
-  cached_network_image: ^2.2.0+1
-  google_fonts: ^1.1.0
-  carousel_pro: ^1.0.0
-  dio: ^3.0.9
-  youtube_player_flutter: ^7.0.0+7
   bloc: ^6.0.3
-  flutter_bloc: ^6.0.4
+  cached_network_image: ^2.2.0+1
+  carousel_pro: ^1.0.0
+  carousel_slider: ^2.3.1
+  cupertino_icons: ^0.1.3
+  dio: ^3.0.9
   equatable: ^1.2.4
-  rxdart: ^0.24.1
-  html_unescape: ^1.0.1+3
-  share: ^0.6.5
+  flutter_bloc: ^6.0.4
+  flutter_html: ^1.0.2
   flutter_icons: ^1.1.0
   flutter_radio_player: ^1.0.7
-  url_launcher: ^5.7.0
+  google_fonts: ^1.1.0
+  hive: null
+  html_unescape: ^1.0.1+3
+  http: ^0.12.2
+  persistent_bottom_nav_bar: ^2.1.0
+  rxdart: ^0.24.1
+  share: ^0.6.5
+  shimmer: ^1.1.2
   store_redirect: ^1.0.2
+  timeago: ^2.0.27
+  url_launcher: ^5.7.0
+  youtube_player_flutter: ^7.0.0+7
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -79,6 +81,8 @@ flutter:
     - assets/splash_top.png
     - assets/youtube_icon.png
     - assets/logo.png
+    - assets/newlogo.png
+    - assets/calligraphy.png
 
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -104,4 +108,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-

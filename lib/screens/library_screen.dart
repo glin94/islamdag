@@ -1,9 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:islamdag/bloc/article_bloc/article_bloc.dart';
 import 'package:islamdag/models/article.dart';
+import 'package:islamdag/widgets/custom_image_widget.dart';
 import 'package:islamdag/widgets/widgets.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import './screens.dart';
 
@@ -17,10 +18,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => setState(() => isList = !isList),
-          child: Icon(isList ? Icons.list : Icons.grid_on),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () => setState(() => isList = !isList),
+        //   child: Icon(isList ? Icons.list : Icons.grid_on),
+        // ),
         backgroundColor: Colors.white,
         body: BlocProvider(
             create: (_) => ArticleBloc("lib")..add(Fetch()),
@@ -38,8 +39,12 @@ class BookListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
-        onTap: () => Navigator.push(
-            context, MaterialPageRoute(builder: (c) => BookDetailScreen(book))),
+        onTap: () => pushNewScreen(
+          context,
+          screen: BookDetailScreen(book),
+          withNavBar: false, // OPTIONAL VALUE. True by default.
+          pageTransitionAnimation: PageTransitionAnimation.cupertino,
+        ),
         child: Container(
           height: 150,
           child: Card(
@@ -58,26 +63,11 @@ class BookListTile extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                   child: Hero(
                                       tag: book.id,
-                                      child: book.images != null
-                                          ? CachedNetworkImage(
-                                              height: 120,
-                                              width: 80,
-                                              fit: BoxFit.cover,
-                                              imageUrl: book.images[0]['src'],
-                                              placeholder: (c, s) => Container(
-                                                  height: 120,
-                                                  width: 80,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    color: Colors.grey[300],
-                                                  )))
-                                          : Image.asset(
-                                              "assets/splash_logo.png",
-                                              height: 120,
-                                              width: 80,
-                                            )))
+                                      child: CustomImageWidget(
+                                        images: book.images,
+                                        height: 120,
+                                        width: 80,
+                                      )))
                             ]))),
                 Flexible(
                     flex: 3,
@@ -140,21 +130,13 @@ class BookGridTile extends StatelessWidget {
     return Hero(
       tag: book.id,
       child: Material(
-        color: Colors.white,
-        elevation: 15.0,
-        shadowColor: Colors.blue.shade900,
-        child: InkWell(
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (c) => BookDetailScreen(book))),
-            child: book.images != null
-                ? CachedNetworkImage(
-                    imageUrl: book.images[0]["src"],
-                    fit: BoxFit.cover,
-                  )
-                : Image.asset(
-                    "assets/splash_logo.png",
-                  )),
-      ),
+          color: Colors.white,
+          elevation: 15.0,
+          shadowColor: Colors.blue.shade900,
+          child: InkWell(
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (c) => BookDetailScreen(book))),
+              child: CustomImageWidget(images: book.images))),
     );
   }
 }

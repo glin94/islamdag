@@ -39,8 +39,7 @@ class _FatawasListState extends State<FatawasList> {
       builder: (context, state) {
         switch (state.status) {
           case ArticleStatus.failure:
-            return const Center(
-                child: Text("Возникли проблемы с загрузкой 😕"));
+            return ConnectionErrorWidget(articleBloc: _articleBloc);
           case ArticleStatus.success:
             if (state.articles.isEmpty) {
               return const Center(child: Text('Статей пока нет...'));

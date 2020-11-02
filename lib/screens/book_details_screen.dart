@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:islamdag/models/article.dart';
 import 'package:islamdag/utils.dart';
 import 'package:islamdag/widgets/widgets.dart';
@@ -12,14 +12,6 @@ class BookDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //app bar
-    final appBar = AppBar(
-      elevation: .5,
-      title: Text('Библиотека'),
-      actions: <Widget>[ShareButton(item: book)],
-    );
-
-    ///detail of book image and it's pages
     final topLeft = Column(
       children: <Widget>[
         Padding(
@@ -30,18 +22,14 @@ class BookDetailScreen extends StatelessWidget {
                 elevation: 15.0,
                 color: Colors.white,
                 shadowColor: Colors.blue.shade900,
-                child: book.images != null
-                    ? CachedNetworkImage(
-                        imageUrl: book.images[0]['src'],
-                        fit: BoxFit.cover,
-                      )
-                    : Image.asset("assets/splash_logo.png")),
+                child: CustomImageWidget(
+                  images: book.images,
+                )),
           ),
         ),
       ],
     );
 
-    ///detail top right
     final topRight = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -56,7 +44,7 @@ class BookDetailScreen extends StatelessWidget {
         SizedBox(height: MediaQuery.of(context).size.height / 50),
         Row(
           children: <Widget>[
-            Icon(Icons.remove_red_eye),
+            Icon(FlutterIcons.eye_ent),
             SizedBox(width: 10),
             text(book.totalCount, color: Colors.black38, size: 14),
           ],
@@ -71,56 +59,66 @@ class BookDetailScreen extends StatelessWidget {
                 minWidth: 160.0,
                 color: Colors.blue,
                 child: text('Скачать',
-                    color: Colors.white, size: 14, isBold: true),
+                    color: Colors.white, size: 16, isBold: true),
               )
             : Container(),
       ],
     );
-
     final topContent = Container(
-      padding: EdgeInsets.only(bottom: 16.0),
+      padding: EdgeInsets.all(8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Flexible(flex: 2, child: topLeft),
-          Flexible(flex: 3, child: topRight),
+          Flexible(flex: 3, child: topRight)
         ],
       ),
     );
 
-    ///scrolling text description
-    final bottomContent = Expanded(
+    final bottomContent = Container(
+        color: Colors.transparent,
+        padding: EdgeInsets.all(16),
         child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15.0),
-                  topRight: Radius.circular(15.0)),
-              color: Colors.white,
-            ),
-            child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  children: <Widget>[
-                    SelectableText(
-                      book.content,
-                      style: TextStyle(fontSize: 16.0, height: 1.5),
-                    ),
-                  ],
-                ))));
+          child: SelectableText(
+            book.content,
+            style: TextStyle(fontSize: 16.0, height: 1.5, color: Colors.white),
+          ),
+        ));
 
-    return Scaffold(
-      appBar: appBar,
-      body: Column(
-        children: <Widget>[topContent, bottomContent],
-      ),
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Colors.blue, Colors.green])),
+        ),
+        Scaffold(
+            backgroundColor: Colors.transparent,
+            body: CustomScrollView(
+              physics: BouncingScrollPhysics(),
+              slivers: [
+                SliverAppBar(
+                  snap: true,
+                  floating: true,
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  actions: <Widget>[ShareButton(item: book)],
+                ),
+                SliverList(
+                  delegate:
+                      SliverChildListDelegate([topContent, bottomContent]),
+                )
+              ],
+            )),
+      ],
     );
   }
 
-  ///create text widget
   text(String data,
           {Color color = Colors.black87,
-          num size = 14,
+          num size = 16,
           EdgeInsetsGeometry padding = EdgeInsets.zero,
           bool isBold = false}) =>
       Padding(
