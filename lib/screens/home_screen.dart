@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
         child: ListView(children: [
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
         child: NamazTime(),
       ),
       BlocProvider(
