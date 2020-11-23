@@ -1,4 +1,4 @@
-package com.selamapp.islamdag
+package com.kaspisoft.islamdag
 
 import io.flutter.embedding.android.FlutterActivity
 

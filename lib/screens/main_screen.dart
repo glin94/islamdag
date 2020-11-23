@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:islamdag/screens/screens.dart';
 import 'package:islamdag/widgets/widgets.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../utils.dart';
@@ -50,9 +51,31 @@ class _MainScreenState extends State<MainScreen> {
                 : null,
             flexibleSpace: CustomGradient(),
             elevation: 7,
-            title: Image.asset(
-              "assets/newlogo.png",
-              width: MediaQuery.of(context).size.width / 2.3,
+            title: GestureDetector(
+              onTap: () => showDialog(
+                context: context,
+                builder: (c) => SimpleDialog(
+                  children: [
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          launchURL(url, context);
+                        },
+                        child: Text("Перейти на сайт")),
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          LaunchReview.launch(
+                              androidAppId: "com.kaspisoft.islamdag");
+                        },
+                        child: Text("Оставить отзыв"))
+                  ],
+                ),
+              ),
+              child: Image.asset(
+                "assets/newlogo.png",
+                width: MediaQuery.of(context).size.width / 2.3,
+              ),
             ),
           ),
           body: PersistentTabView(
