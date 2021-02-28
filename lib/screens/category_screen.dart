@@ -15,19 +15,18 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(name),
-          flexibleSpace: CustomGradient(),
-        ),
-        body: BlocProvider(
-          create: (_) => ArticleBloc(
-              categories.firstWhere((e) => e.containsValue(e[name]))[name])
-            ..add(Fetch()),
-          child: SingleChildScrollView(
-            child: ArticlesBoxFeaturedList(
-              categoryName: "",
-            ),
-          ),
-        ));
+      appBar: AppBar(
+        title: Text(name),
+        flexibleSpace: CustomGradient(),
+      ),
+      body: BlocProvider(
+        create: (_) => ArticleBloc(
+            categories.firstWhere((e) => e.containsValue(e[name]))[name])
+          ..add(Fetch()),
+        child: ListView(physics: BouncingScrollPhysics(), children: [
+          ArticlesBoxFeaturedList(categoryName: ""),
+        ]),
+      ),
+    );
   }
 }

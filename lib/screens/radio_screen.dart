@@ -41,6 +41,7 @@ class _RadioScreenState extends State<RadioScreen> {
           Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
+                centerTitle: true,
                 title: Text("Радио"),
                 backgroundColor: Colors.transparent,
                 elevation: 0,

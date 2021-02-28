@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:html_unescape/html_unescape_small.dart';
+import 'package:islamdag/models/area.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/intl.dart';
@@ -10,7 +11,7 @@ import 'screens/screens.dart';
 
 const String url = 'http://islamdag.ru';
 var listDrawer = [
-  {"text": " Главная", "icon": AntDesign.home, "screen": HomeScreen()},
+  {"text": " Главная", "icon": AntDesign.home, "screen": const HomeScreen()},
   {"text": "Статьи", "icon": AntDesign.profile, "screen": CategoriesScreen()},
   {
     "text": "Видеотека",
@@ -25,6 +26,13 @@ var listDrawer = [
   }
 ];
 
+Area defaultArea = Area(
+  id: 185733,
+  districtCode: "0",
+  name: "Махачкала",
+  selected: true,
+  type: "г.",
+);
 const categories = [
   {"Последние": "articles"},
   {"Новости": "news"},
@@ -34,10 +42,9 @@ const categories = [
   {"Личности": "articles/lichnosti"},
   {"Мусульманка": "articles/musulmanka"},
   {"Все об Исламе": "articles/vseobislame"},
-  {"Здоровье": "articles/health"},
   {"Мы в Исламе": "articles/v-islame"},
   {"Актуальное интервью": "articles/intervy"},
-  {"На родном": "articles/narodnom"},
+  {"Здоровье": "articles/health"},
 ];
 
 void initTimeLang() {

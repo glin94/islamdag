@@ -11,7 +11,9 @@ class FatawaDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(article.title),
-        actions: [ShareButton(item: article)],
+        actions: [
+          ShareButton(item: article),
+        ],
         flexibleSpace: CustomGradient(),
       ),
       backgroundColor: Colors.white,
@@ -20,16 +22,18 @@ class FatawaDetailsPage extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
             Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 8,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Вопрос:",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .copyWith(color: Theme.of(context).accentColor),
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Theme.of(context).accentColor,
+                      ),
                 ),
                 SizedBox(
                   height: 5,
@@ -39,18 +43,35 @@ class FatawaDetailsPage extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Text(
-                  "Ответ:",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .copyWith(color: Theme.of(context).accentColor),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 12,
+                  ),
+                  child: Divider(
+                    height: 2,
+                  ),
                 ),
+                article.content.contains("ОТВЕТ")
+                    ? Container()
+                    : Text(
+                        "Ответ:",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .copyWith(color: Theme.of(context).accentColor),
+                      ),
               ],
             ),
           ),
-          HtmlRendering(
-            content: article.content,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 12,
+            ),
+            child: HtmlRendering(
+              content: article.content,
+            ),
           )
         ]),
       ),

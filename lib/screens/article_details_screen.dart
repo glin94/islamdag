@@ -105,35 +105,35 @@ class ModalSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-        child: Column(children: [
-      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
-        Flexible(
-          child: Text(
-            "Размер текста",
-            overflow: TextOverflow.ellipsis,
+      child: Column(children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () => Navigator.of(context).pop()),
+          Flexible(
+            child: Text(
+              "Размер текста",
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-        ),
-        Opacity(
+          Opacity(
             opacity: 0.0,
             child: IconButton(
               icon: Icon(Icons.clear),
               onPressed: null,
-            )),
+            ),
+          ),
+        ]),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+              children: List.generate(5, (int index) => index)
+                  .map((e) => Container(
+                        child: Icon(Icons.text_format, size: 40),
+                      ))
+                  .toList()),
+        )
       ]),
-      Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-            children: List.generate(5, (int index) => index)
-                .map((e) => Container(
-                      child: Icon(Icons.text_format, size: 40),
-                    ))
-                .toList()),
-      )
-    ]));
+    );
   }
 }

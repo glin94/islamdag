@@ -41,23 +41,12 @@ class CategoryWidget extends StatelessWidget {
   }
 }
 
-class CarouselBloc extends StatefulWidget {
-  @override
-  _CarouselBlocState createState() => _CarouselBlocState();
-}
-
-class _CarouselBlocState extends State<CarouselBloc> {
-  ArticleBloc _articleBloc;
-  @override
-  void initState() {
-    super.initState();
-    _articleBloc = context.bloc<ArticleBloc>();
-  }
-
+class CarouselBloc extends StatelessWidget {
+  const CarouselBloc({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ArticleBloc, ArticleState>(
-      cubit: _articleBloc,
+      cubit: BlocProvider.of<ArticleBloc>(context),
       builder: (context, state) {
         switch (state.status) {
           case ArticleStatus.failure:

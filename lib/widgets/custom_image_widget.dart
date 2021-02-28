@@ -18,19 +18,21 @@ class CustomImageWidget extends StatelessWidget {
             fit: BoxFit.cover,
             imageUrl: images[0]['src'],
             errorWidget: (c, s, d) => Image.asset(
-                  "assets/splash_logo.png",
-                  height: height,
-                  width: width,
-                ),
-            placeholder: (c, s) => CustomShimmer(
-                height: height,
-                width: width,
+              "assets/splash_logo.png",
+              height: height,
+              width: width,
+            ),
+            placeholder: (c, s) => Container(
+              child: CustomShimmer(
+                height: height ?? 300,
+                width: width ?? double.infinity,
                 child: Container(
-                    height: height,
-                    width: width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ))))
+                  height: height ?? 300,
+                  width: width ?? double.infinity,
+                ),
+              ),
+            ),
+          )
         : Image.asset(
             "assets/splash_logo.png",
             height: height,

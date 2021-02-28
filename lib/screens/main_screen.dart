@@ -30,94 +30,112 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        initialIndex: _selectedIndex,
-        length: categories.length,
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(FlutterIcons.radio_mdi),
-                onPressed: () => pushNewScreen(context,
-                    withNavBar: true,
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                    screen: RadioScreen())),
-            centerTitle: true,
-            actions: [_selectedIndex == 4 ? AskButton() : Container()],
-            bottom: _selectedIndex == 1
-                ? TabBar(
-                    isScrollable: true,
-                    tabs: categories
-                        .map<Tab>((e) => Tab(text: e.keys.first))
-                        .toList())
-                : null,
-            flexibleSpace: CustomGradient(),
-            elevation: 7,
-            title: GestureDetector(
-              onTap: () => showDialog(
-                context: context,
-                builder: (c) => SimpleDialog(
-                  children: [
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          launchURL(url, context);
-                        },
-                        child: Text("Перейти на сайт")),
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          LaunchReview.launch(
-                              androidAppId: "com.kaspisoft.islamdag");
-                        },
-                        child: Text("Оставить отзыв"))
-                  ],
-                ),
-              ),
-              child: Image.asset(
-                "assets/newlogo.png",
-                width: MediaQuery.of(context).size.width / 2.3,
-              ),
+      initialIndex: _selectedIndex,
+      length: categories.length,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(FlutterIcons.radio_mdi),
+            onPressed: () => pushNewScreen(
+              context,
+              withNavBar: true,
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              screen: RadioScreen(),
             ),
           ),
-          body: PersistentTabView(
-              onItemSelected: (i) => setState(() => _selectedIndex = i),
-              controller: _controller,
-              screens: listDrawer.map<Widget>((e) => e["screen"]).toList(),
-              items: listDrawer
-                  .map<PersistentBottomNavBarItem>(
-                    (e) => PersistentBottomNavBarItem(
-                        icon: Icon(e["icon"]),
-                        title: e["text"],
-                        activeColor: Colors.white,
-                        inactiveColor: Colors.white.withOpacity(0.75)),
-                  )
-                  .toList(),
-              confineInSafeArea: false,
-              handleAndroidBackButtonPress: true,
-              resizeToAvoidBottomInset: true,
-              stateManagement: true,
-              hideNavigationBarWhenKeyboardShows: true,
-              hideNavigationBar: _hideNavBar,
-              popActionScreens: PopActionScreensType.once,
-              decoration: NavBarDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: <Color>[Colors.blue, Colors.green]),
-                  colorBehindNavBar: Colors.indigo,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15))),
-              popAllScreensOnTapOfSelectedTab: true,
-              itemAnimationProperties: ItemAnimationProperties(
-                duration: Duration(milliseconds: 400),
-                curve: Curves.ease,
+          centerTitle: true,
+          actions: [_selectedIndex == 4 ? AskButton() : Container()],
+          bottom: _selectedIndex == 1
+              ? TabBar(
+                  isScrollable: true,
+                  tabs: categories
+                      .map<Tab>((e) => Tab(text: e.keys.first))
+                      .toList())
+              : null,
+          flexibleSpace: CustomGradient(),
+          elevation: 7,
+          title: GestureDetector(
+            onTap: () => showDialog(
+              context: context,
+              builder: (c) => AppDialog(),
+            ),
+            child: Image.asset(
+              "assets/newlogo.png",
+              width: MediaQuery.of(context).size.width / 2.3,
+            ),
+          ),
+        ),
+        body: PersistentTabView(
+            onItemSelected: (i) => setState(() => _selectedIndex = i),
+            controller: _controller,
+            screens: listDrawer.map<Widget>((e) => e["screen"]).toList(),
+            items: listDrawer
+                .map<PersistentBottomNavBarItem>(
+                  (e) => PersistentBottomNavBarItem(
+                    icon: Icon(e["icon"]),
+                    title: e["text"],
+                    activeColor: Colors.white,
+                    inactiveColor: Colors.white.withOpacity(0.75),
+                  ),
+                )
+                .toList(),
+            confineInSafeArea: false,
+            handleAndroidBackButtonPress: true,
+            resizeToAvoidBottomInset: true,
+            stateManagement: true,
+            hideNavigationBarWhenKeyboardShows: true,
+            hideNavigationBar: _hideNavBar,
+            popActionScreens: PopActionScreensType.once,
+            decoration: NavBarDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Colors.blue, Colors.green]),
+              colorBehindNavBar: Colors.indigo,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
               ),
-              screenTransitionAnimation: ScreenTransitionAnimation(
-                animateTabTransition: true,
-                curve: Curves.ease,
-                duration: Duration(milliseconds: 200),
-              ),
-              navBarStyle: NavBarStyle.style9),
-        ));
+            ),
+            popAllScreensOnTapOfSelectedTab: true,
+            itemAnimationProperties: ItemAnimationProperties(
+              duration: Duration(milliseconds: 400),
+              curve: Curves.ease,
+            ),
+            screenTransitionAnimation: ScreenTransitionAnimation(
+              animateTabTransition: true,
+              curve: Curves.ease,
+              duration: Duration(milliseconds: 200),
+            ),
+            navBarStyle: NavBarStyle.style9),
+      ),
+    );
+  }
+}
+
+class AppDialog extends StatelessWidget {
+  const AppDialog({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      children: [
+        FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+              launchURL(url, context);
+            },
+            child: Text("Перейти на сайт")),
+        FlatButton(
+          onPressed: () {
+            Navigator.pop(context);
+            LaunchReview.launch(androidAppId: "com.kaspisoft.islamdag");
+          },
+          child: Text("Оставить отзыв"),
+        )
+      ],
+    );
   }
 }

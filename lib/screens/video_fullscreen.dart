@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class VideoFullScreen extends StatelessWidget {
+class VideoFullScreen extends StatefulWidget {
   final YoutubePlayerController controller;
   final String title;
   const VideoFullScreen({
@@ -10,12 +10,19 @@ class VideoFullScreen extends StatelessWidget {
     this.controller,
     this.title,
   }) : super(key: key);
+
+  @override
+  _VideoFullScreenState createState() => _VideoFullScreenState();
+}
+
+class _VideoFullScreenState extends State<VideoFullScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
         child: YoutubePlayer(
+          // onReady: () => widget.controller.seekTo(Duration(seconds: 3)),
           showVideoProgressIndicator: true,
           topActions: [
             CloseButton(
@@ -29,8 +36,8 @@ class VideoFullScreen extends StatelessWidget {
               },
             )
           ],
-          key: ObjectKey(controller),
-          controller: controller,
+          key: ObjectKey(widget.controller),
+          controller: widget.controller,
           actionsPadding: const EdgeInsets.only(left: 16.0),
           bottomActions: [
             CurrentPosition(),

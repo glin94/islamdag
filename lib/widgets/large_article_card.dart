@@ -12,8 +12,13 @@ class LargeArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: InkWell(
+          highlightColor: Colors.transparent,
           onTap: () => pushNewScreen(context,
               screen: ArticleDetailScreen(article: article),
               withNavBar: false,
@@ -21,7 +26,7 @@ class LargeArticleCard extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(6.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
                     Padding(
@@ -54,9 +59,14 @@ class LargeArticleCard extends StatelessWidget {
                   ],
                 ),
               ),
-              HtmlRendering(
-                  content: article.content
-                      .substring(0, article.content.indexOf(".") + 1)),
+              article.content
+                          .substring(0, article.content.indexOf(".") + 1)
+                          .length >
+                      60
+                  ? HtmlRendering(
+                      content: article.content
+                          .substring(0, article.content.indexOf(".") + 1))
+                  : Container(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Align(

@@ -35,18 +35,24 @@ class BookDetailScreen extends StatelessWidget {
       children: <Widget>[
         Container(
           width: MediaQuery.of(context).size.height / 3,
-          child: text(book.title,
-              color: Colors.white,
-              size: 18,
-              isBold: true,
-              padding: EdgeInsets.only(top: 16.0)),
+          child: text(
+            book.title,
+            color: Colors.white,
+            size: 18,
+            isBold: true,
+            padding: EdgeInsets.only(top: 16.0),
+          ),
         ),
         SizedBox(height: MediaQuery.of(context).size.height / 50),
         Row(
           children: <Widget>[
             Icon(FlutterIcons.eye_ent),
             SizedBox(width: 10),
-            text(book.totalCount, color: Colors.black38, size: 14),
+            text(
+              book.totalCount,
+              color: Colors.black38,
+              size: 14,
+            ),
           ],
         ),
         SizedBox(height: MediaQuery.of(context).size.height / 50),
@@ -58,8 +64,12 @@ class BookDetailScreen extends StatelessWidget {
                 },
                 minWidth: 160.0,
                 color: Colors.blue,
-                child: text('Скачать',
-                    color: Colors.white, size: 16, isBold: true),
+                child: text(
+                  'Скачать',
+                  color: Colors.white,
+                  size: 16,
+                  isBold: true,
+                ),
               )
             : Container(),
       ],
@@ -70,7 +80,7 @@ class BookDetailScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Flexible(flex: 2, child: topLeft),
-          Flexible(flex: 3, child: topRight)
+          Flexible(flex: 3, child: topRight),
         ],
       ),
     );
@@ -81,7 +91,11 @@ class BookDetailScreen extends StatelessWidget {
         child: Container(
           child: SelectableText(
             book.content,
-            style: TextStyle(fontSize: 16.0, height: 1.5, color: Colors.white),
+            style: TextStyle(
+              fontSize: 16.0,
+              height: 1.5,
+              color: Colors.white,
+            ),
           ),
         ));
 
@@ -116,11 +130,13 @@ class BookDetailScreen extends StatelessWidget {
     );
   }
 
-  text(String data,
-          {Color color = Colors.black87,
-          num size = 16,
-          EdgeInsetsGeometry padding = EdgeInsets.zero,
-          bool isBold = false}) =>
+  Widget text(
+    String data, {
+    Color color = Colors.black87,
+    num size = 16,
+    EdgeInsetsGeometry padding = EdgeInsets.zero,
+    bool isBold = false,
+  }) =>
       Padding(
         padding: padding,
         child: Text(

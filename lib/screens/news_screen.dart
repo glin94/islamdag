@@ -11,7 +11,7 @@ class NewsListScreen extends StatelessWidget {
       color: Colors.white,
       child: BlocProvider(
           create: (_) => ArticleBloc("news")..add(Fetch()),
-          child: ArticlesList()),
+          child: ArticlesList(),),
     );
   }
 }

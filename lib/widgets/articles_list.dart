@@ -47,7 +47,7 @@ class _ArticlesListState extends State<ArticlesList> {
               physics: BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return index >= state.articles.length
-                    ? BottomLoader()
+                    ? Loader()
                     : ArticleCardItem(article: state.articles[index]);
               },
               itemCount: state.hasReachedMax

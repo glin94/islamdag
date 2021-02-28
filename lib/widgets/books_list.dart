@@ -58,7 +58,7 @@ class _BooksListState extends State<BooksList> {
                           delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
                             return index >= state.articles.length
-                                ? BottomLoader()
+                                ? Loader()
                                 : BookListTile(book: state.articles[index]);
                           },
                           childCount: state.hasReachedMax
@@ -78,7 +78,7 @@ class _BooksListState extends State<BooksList> {
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 return index >= state.articles.length
-                                    ? BottomLoader()
+                                    ? Loader()
                                     : BookGridTile(book: state.articles[index]);
                               },
                               childCount: state.hasReachedMax

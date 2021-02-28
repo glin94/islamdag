@@ -55,7 +55,7 @@ class _VideosListState extends State<VideosList> {
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return index >= state.articles.length
-                      ? BottomLoader()
+                      ? const Loader()
                       : VideoItem(video: state.articles[index]);
                 },
                 itemCount: state.hasReachedMax
@@ -64,7 +64,6 @@ class _VideosListState extends State<VideosList> {
                 controller: _scrollController,
               ),
             );
-
           default:
             return const Center(child: CircularProgressIndicator());
         }

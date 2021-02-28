@@ -1,10 +1,12 @@
-import 'dart:io';
-
+import 'package:islamdag/models/area.dart';
 import 'package:islamdag/models/article.dart';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 
 import '../utils.dart';
+
+const citysUrl = 'https://app.muftiyatrd.ru/api/cities';
+const areasUrl = 'https://app.muftiyatrd.ru/api/areas';
 
 Dio dio = new Dio();
 
@@ -18,19 +20,33 @@ Article parseArticle(String responseBody) {
   return Article.fromJson(parsed);
 }
 
-Future<Map<String, dynamic>> fetchPrayTime() async {
-  String apiUrl = "$url/json/namaz.json";
+Future<List<dynamic>> fetchPrayTime(int regionId) async {
+  String apiUrl =
+      "https://app.muftiyatrd.ru/api/ruznama?city=$regionId&year=${DateTime.now().year}&month=${DateTime.now().month}";
   final response = await dio.get(apiUrl);
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    return response.data;
-  } else if (response.statusCode == 404) {
-    throw HttpException("Файл не найден");
+    return response.data["array"].toList();
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load pray time');
+  }
+}
+
+Future<List<Area>> fetchAreas() async {
+  final responseCity = await dio.get(citysUrl);
+  final responseAreas = await dio.get(areasUrl);
+  var list = List();
+  if (responseCity.statusCode == 200 && responseAreas.statusCode == 200) {
+    list = responseCity.data["array"].toList() +
+        responseAreas.data["array"].toList();
+    return list.map((json) => Area.fromJson(json)).toList();
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load pray region');
   }
 }
 

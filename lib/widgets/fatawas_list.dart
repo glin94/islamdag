@@ -53,7 +53,7 @@ class _FatawasListState extends State<FatawasList> {
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return index >= state.articles.length
-                      ? BottomLoader()
+                      ? const Loader()
                       : FatawaItem(article: state.articles[index]);
                 },
                 itemCount: state.hasReachedMax
